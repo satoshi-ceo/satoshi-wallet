@@ -129,14 +129,23 @@
         <div>
           <h3>The corresponding EVM address</h3>
           <p>Ethereum uses the same secp256k1 key-pair system. Starting from the full public key, you can derive the Ethereum address that the same private key would control on any standard EVM chain.</p>
-          <div class="address-box">
-            <div>
-              <span>SATOSHI BLOCK 9 — EVM ADDRESS</span>
-              <code id="walletAddress">0xYOUR_SATOSHI_BLOCK9_ADDRESS</code>
+          <div class="crypto-example">
+            <div class="key-row">
+              <div>
+                <span>SATOSHI BLOCK 9 — PUBLIC KEY</span>
+                <code id="block9PublicKey">0411db93e1dcdb8a016b49840f8c53bc1eb68a382e97b1482ecad7b148a6909a5cb2e0eaddfb84ccf9744464f82e160bfa9b8b64f9d4c03f999b8643f656b412a3</code>
+              </div>
+              <button onclick="copyCode(this, 'block9PublicKey')">COPY</button>
             </div>
-            <button onclick="copyAddress()">COPY</button>
+            <div class="key-row result-row">
+              <div>
+                <span>DERIVED EVM ADDRESS</span>
+                <code id="walletAddress">0x3faae4C91C60C9aBAD40E814Ba23FC26DC2a6bcE</code>
+              </div>
+              <button onclick="copyCode(this, 'walletAddress')">COPY</button>
+            </div>
           </div>
-          <p class="note">Replace the placeholder above with the address you independently derive and verify before launch.</p>
+          <p class="note">This address is deterministically derived from the public key embedded in the block 9 coinbase output. Deriving the address does not reveal the private key.</p>
         </div>
       </article>
 
@@ -144,14 +153,38 @@
         <div class="doc-num">3.3</div>
         <div>
           <h3>Don't trust. Verify.</h3>
-          <p>The point of the project is not “trust us.” The derivation can be reproduced with any known secp256k1 key pair. Take a solved Bitcoin puzzle key, derive its EVM address from the public key, then import the known private key into an EVM wallet. Both routes should resolve to the same address.</p>
-          <div class="verify-grid">
-            <div><span>01</span><p>Start with a known public key.</p></div>
-            <div><span>02</span><p>Derive the EVM address.</p></div>
-            <div><span>03</span><p>Import the matching private key.</p></div>
-            <div><span>04</span><p>Confirm the wallet address matches.</p></div>
+          <p>You can reproduce the derivation with a publicly disclosed key pair from solved Bitcoin puzzle #135. Start with the public key below, derive its Ethereum address, and then compare it with the address produced by importing the matching puzzle private key into an EVM wallet.</p>
+          <a class="text-link" href="https://privatekeys.pw/puzzles/bitcoin-puzzle-tx?table=0&amp;status=solved#p135" target="_blank" rel="noreferrer">View solved Bitcoin puzzle #135 ↗</a>
+          <div class="crypto-example verify-example">
+            <div class="key-row">
+              <div>
+                <span>PUZZLE #135 — COMPRESSED PUBLIC KEY</span>
+                <code id="puzzlePublicKey">02145d2611c823a396ef6712ce0f712f09b9b4f3135e3e0aa3230fb9b6d08d1e16</code>
+              </div>
+              <button onclick="copyCode(this, 'puzzlePublicKey')">COPY</button>
+            </div>
+            <div class="key-row result-row">
+              <div>
+                <span>DERIVED EVM ADDRESS</span>
+                <code id="puzzleAddress">0xe8dB5fb309686cb96a6827E5205EbE0D5E3Cb599</code>
+              </div>
+              <button onclick="copyCode(this, 'puzzleAddress')">COPY</button>
+            </div>
+            <div class="key-row warning-row">
+              <div>
+                <span>PUBLICLY DISCLOSED PUZZLE PRIVATE KEY</span>
+                <code id="puzzlePrivateKey">0000000000000000000000000000006d9392a16883f90903d5f78da57af07eb2</code>
+              </div>
+              <button onclick="copyCode(this, 'puzzlePrivateKey')">COPY</button>
+            </div>
           </div>
-          <div class="callout"><b>Important:</b> deriving an address from a public key does not reveal or recover the private key. It only identifies the EVM account that the holder of that private key would control.</div>
+          <div class="verify-grid">
+            <div><span>01</span><p>Copy the puzzle public key.</p></div>
+            <div><span>02</span><p>Derive its Ethereum address.</p></div>
+            <div><span>03</span><p>Import the disclosed puzzle key.</p></div>
+            <div><span>04</span><p>Confirm both produce the address shown above.</p></div>
+          </div>
+          <div class="callout"><b>Research example only:</b> this private key belongs to an already solved, publicly disclosed puzzle. Treat it as compromised and never send funds to it. Deriving an address from a public key does not reveal or recover a private key.</div>
         </div>
       </article>
     </section>
