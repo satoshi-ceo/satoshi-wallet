@@ -13,10 +13,10 @@ const observer = new IntersectionObserver(entries => {
 },{threshold:[0.15,0.4,0.7], rootMargin:'-18% 0px -60% 0px'});
 sections.forEach(s=>observer.observe(s));
 
-function copyAddress(){
-  const text = document.getElementById('walletAddress').innerText;
-  navigator.clipboard?.writeText(text);
-  const btn = event.currentTarget;
+function copyCode(btn, elementId){
+  const element = document.getElementById(elementId);
+  if(!element) return;
+  navigator.clipboard?.writeText(element.innerText);
   const old = btn.innerText; btn.innerText = 'COPIED';
   setTimeout(()=>btn.innerText=old,1200);
 }
