@@ -24,7 +24,7 @@ const zh = {
   exploreWallet: '探索钱包',
   buyCeo: '购买 $CEO',
   contractLabel: '$CEO 合约地址',
-  contractNote: '正式合约地址将在上线时公布。与代币交互前，请务必在本页面核对合约地址。',
+  contractNote: '正式合约地址已上线。与代币交互前，请务必在本页面核对合约地址。',
   nameLabel: '名称',
   tickerLabel: '代码',
   chainLabel: '链',
@@ -100,7 +100,7 @@ const dynamicText = {
     comingSoon: 'COMING SOON',
     caSoon: 'CA SOON',
     copyCa: 'COPY CA',
-    buyLinkSoon: 'Buy link coming soon'
+    contractLiveNote: 'The official $CEO contract is now live. Always verify the contract address on this page before interacting with the token.'
   },
   zh: {
     pageTitle: '$CEO — Satoshi Wallet｜中本聪钱包',
@@ -110,7 +110,7 @@ const dynamicText = {
     comingSoon: '即将公布',
     caSoon: '地址待公布',
     copyCa: '复制合约地址',
-    buyLinkSoon: '购买链接即将公布'
+    contractLiveNote: '正式 $CEO 合约现已上线。与代币交互前，请务必在本页面核对合约地址。'
   }
 };
 
@@ -119,9 +119,9 @@ const menu = document.getElementById('mobileMenu');
 const languageButtons = [...document.querySelectorAll('.lang-button')];
 const metaDescription = document.querySelector('meta[name="description"]');
 
-// Add the live links here once they are available.
-const CONTRACT_ADDRESS = '';
-const BUY_URL = '';
+const CONTRACT_ADDRESS = '0xA87159135eBFa535a2ADF29c74E5Fa904d694681';
+const CONTRACT_URL = 'https://robinhoodchain.blockscout.com/address/0xA87159135eBFa535a2ADF29c74E5Fa904d694681';
+const BUY_URL = CONTRACT_URL;
 
 const originalText = new Map();
 const originalHtml = new Map();
@@ -138,12 +138,6 @@ let currentLanguage = getInitialLanguage();
 menu?.addEventListener('click', () => sidebar?.classList.toggle('open'));
 document.querySelectorAll('.nav a').forEach(link => link.addEventListener('click', () => sidebar?.classList.remove('open')));
 languageButtons.forEach(button => button.addEventListener('click', () => applyLanguage(button.dataset.lang)));
-
-document.addEventListener('click', event => {
-  if (!(event.target instanceof Element)) return;
-  const disabledBuyLink = event.target.closest('[data-buy-link][aria-disabled="true"]');
-  if (disabledBuyLink) event.preventDefault();
-});
 
 const sections = [...document.querySelectorAll('section[id]')];
 const mains = [...document.querySelectorAll('.nav-main')];
@@ -165,9 +159,7 @@ function getInitialLanguage() {
   try {
     const savedLanguage = localStorage.getItem('ceo-language');
     if (savedLanguage === 'en' || savedLanguage === 'zh') return savedLanguage;
-  } catch (error) {
-    // Language switching still works when storage is blocked.
-  }
+  } catch (error) {}
 
   return navigator.language?.toLowerCase().startsWith('zh') ? 'zh' : 'en';
 }
@@ -212,12 +204,11 @@ function applyLanguage(language) {
 
   try {
     localStorage.setItem('ceo-language', language);
-  } catch (error) {
-    // Persistence is optional.
-  }
+  } catch (error) {}
 
   initContractAddress();
   initBuyLinks();
+  initContractLink();
 }
 
 async function writeClipboard(text) {
@@ -260,43 +251,48 @@ function initContractAddress() {
   const addressElement = document.getElementById('contractAddress');
   const copyButton = document.getElementById('copyContract');
   const panel = document.getElementById('contractPanel');
+  const note = document.querySelector('.ca-note');
   if (!addressElement || !copyButton) return;
 
-  if (CONTRACT_ADDRESS) {
-    addressElement.textContent = CONTRACT_ADDRESS;
-    copyButton.disabled = false;
-    copyButton.textContent = d('copyCa');
-    panel?.classList.add('live');
-  } else {
-    addressElement.textContent = d('comingSoon');
-    copyButton.disabled = true;
-    copyButton.textContent = d('caSoon');
-    panel?.classList.remove('live');
-  }
+  addressElement.textContent = CONTRACT_ADDRESS;
+  copyButton.disabled = false;
+  copyButton.textContent = d('copyCa');
+  panel?.classList.add('live');
+  if (note) note.textContent = d('contractLiveNote');
+
+  addressElement.setAttribute('role', 'link');
+  addressElement.setAttribute('tabindex', '0');
+  addressElement.setAttribute('title', 'View contract on Blockscout');
+  addressElement.style.cursor = 'pointer';
+  addressElement.onclick = () => window.open(CONTRACT_URL, '_blank', 'noopener,noreferrer');
+  addressElement.onkeydown = event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      window.open(CONTRACT_URL, '_blank', 'noopener,noreferrer');
+    }
+  };
 }
 
 function initBuyLinks() {
   document.querySelectorAll('[data-buy-link]').forEach(link => {
-    if (BUY_URL) {
-      link.href = BUY_URL;
-      link.target = '_blank';
-      link.rel = 'noreferrer';
-      link.classList.remove('is-disabled');
-      link.removeAttribute('aria-disabled');
-      link.removeAttribute('title');
-    } else {
-      link.href = '#';
-      link.classList.add('is-disabled');
-      link.setAttribute('aria-disabled', 'true');
-      link.setAttribute('title', d('buyLinkSoon'));
-      link.removeAttribute('target');
-      link.removeAttribute('rel');
-    }
+    link.href = BUY_URL;
+    link.target = '_blank';
+    link.rel = 'noreferrer';
+    link.classList.remove('is-disabled');
+    link.removeAttribute('aria-disabled');
+    link.removeAttribute('title');
   });
 }
 
+function initContractLink() {
+  const link = document.querySelector('[data-i18n-html="viewContract"]');
+  if (!link) return;
+  link.href = CONTRACT_URL;
+  link.target = '_blank';
+  link.rel = 'noreferrer';
+}
+
 async function copyContractAddress() {
-  if (!CONTRACT_ADDRESS) return;
   const button = document.getElementById('copyContract');
 
   try {
