@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="$CEO — Satoshi Wallet. A meme-token experiment built around the public key from Bitcoin block 9 and its mathematically corresponding EVM address." />
+  <title>$CEO — Satoshi Wallet</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <img src="assets/token.jpg" alt="$CEO token artwork" class="brand-mark" />
+      <div>
+        <div class="brand-title">SATOSHI WALLET</div>
+        <div class="brand-ticker">$CEO</div>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Documentation navigation">
+      <a class="nav-main active" href="#intro">01&nbsp;&nbsp;Intro</a>
+
+      <a class="nav-main" href="#legend">02&nbsp;&nbsp;The Legend</a>
+      <div class="nav-sub">
+        <a href="#keys-addresses">Public Keys & Addresses</a>
+        <a href="#early-bitcoin">Early Bitcoin Days</a>
+      </div>
+
+      <a class="nav-main" href="#wallet">03&nbsp;&nbsp;The Wallet</a>
+      <div class="nav-sub">
+        <a href="#block-9">Why Block 9?</a>
+        <a href="#evm-address">The EVM Address</a>
+        <a href="#verify">Don't Trust. Verify.</a>
+      </div>
+
+      <a class="nav-main" href="#mission">04&nbsp;&nbsp;The Chain, Coin & Mission</a>
+      <div class="nav-sub">
+        <a href="#why-coin">Why a Coin?</a>
+        <a href="#why-chain">Why Robinhood Chain?</a>
+        <a href="#why-ceo">Why $CEO?</a>
+        <a href="#flywheel">The Flywheel</a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="mini-label">STATUS</div>
+      <div class="status"><span></span> Genesis mode</div>
+      <p>Experimental meme token. No affiliation with Satoshi Nakamoto, Robinhood Markets, Strategy or Michael Saylor.</p>
+    </div>
+  </aside>
+
+  <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+
+  <main class="content">
+    <section class="hero" id="intro">
+      <div class="eyebrow">SATOSHI WALLET / $CEO</div>
+      <div class="hero-grid">
+        <div>
+          <h1>What if Satoshi came back<br/>as the <span>$CEO</span>?</h1>
+          <p class="lead">A meme-token experiment built around one strange cryptographic fact: the public key Satoshi used in Bitcoin's earliest days can be mapped to an EVM address controlled by the very same private key.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#wallet">Explore the wallet</a>
+            <a class="btn ghost" href="#verify">Verify the math</a>
+          </div>
+
+          <div class="ca-panel" id="contractPanel">
+            <div class="ca-copy">
+              <span class="ca-label">$CEO CONTRACT ADDRESS</span>
+              <code id="contractAddress">COMING SOON</code>
+            </div>
+            <button class="ca-button" id="copyContract" type="button" onclick="copyContractAddress()" disabled>CA SOON</button>
+          </div>
+          <p class="ca-note">The official contract address will be published here at launch. Always verify the CA from this page before interacting with the token.</p>
+        </div>
+        <div class="hero-card">
+          <img src="assets/token.jpg" alt="$CEO token artwork" />
+          <div class="hero-card-meta">
+            <span>NAME</span><strong>Satoshi Wallet</strong>
+            <span>TICKER</span><strong>$CEO</strong>
+            <span>CHAIN</span><strong>Robinhood Chain</strong>
+            <span>PAIR</span><strong>$MSTR / TOKENIZED STOCK</strong>
+          </div>
+        </div>
+      </div>
+      <div class="manifesto">17 years of Bitcoin economics. One ancient public key. One EVM wallet waiting in plain sight.</div>
+    </section>
+
+    <section id="legend">
+      <div class="section-kicker">02 / THE LEGEND</div>
+      <h2>The key existed before the address.</h2>
+      <p>Bitcoin started simpler than most people remember. Before the address formats we use today became standard, early transactions could pay directly to public keys. That matters because a public key is not tied to one blockchain's branding — it comes from the underlying cryptography.</p>
+
+      <article class="doc-card" id="keys-addresses">
+        <div class="doc-num">2.1</div>
+        <div>
+          <h3>Are public keys and addresses the same thing?</h3>
+          <p><strong>Not exactly.</strong> A public key is a point on an elliptic curve derived from a private key. An address is a chain-specific representation derived from that public key. Bitcoin and Ethereum package the result differently, but both ultimately rely on the same secp256k1 private-key → public-key relationship.</p>
+          <div class="formula"><span>PRIVATE KEY</span><b>→</b><span>PUBLIC KEY</span><b>→</b><span>CHAIN-SPECIFIC ADDRESS</span></div>
+          <p class="note">Different address format. Same underlying key pair.</p>
+        </div>
+      </article>
+
+      <article class="doc-card" id="early-bitcoin">
+        <div class="doc-num">2.2</div>
+        <div>
+          <h3>Early Bitcoin Days</h3>
+          <p>In Bitcoin's earliest era, pay-to-public-key transactions were common. Satoshi's early activity therefore left public keys visible on-chain — public information that has been preserved for more than a decade.</p>
+          <p>Once you have a valid secp256k1 public key, deriving its corresponding Ethereum-style address is deterministic. No guessing. No seed phrase. No private-key recovery. Just public cryptographic math.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="wallet">
+      <div class="section-kicker">03 / THE WALLET</div>
+      <h2>The block 9 key.</h2>
+
+      <article class="doc-card" id="block-9">
+        <div class="doc-num">3.1</div>
+        <div>
+          <h3>Why block 9?</h3>
+          <p>Block 9 is famous because its coinbase output was later used in the first widely recognized person-to-person Bitcoin transfer: Satoshi Nakamoto sent 10 BTC to Hal Finney. It is one of the earliest tangible examples of Satoshi exercising control over a Bitcoin private key.</p>
+          <a class="text-link" href="https://www.guinnessworldrecords.com/world-records/696243-first-bitcoin-transaction" target="_blank" rel="noreferrer">Guinness World Records ↗</a>
+        </div>
+      </article>
+
+      <article class="doc-card" id="evm-address">
+        <div class="doc-num">3.2</div>
+        <div>
+          <h3>The corresponding EVM address</h3>
+          <p>Ethereum uses the same secp256k1 key-pair system. Starting from the full public key, you can derive the Ethereum address that the same private key would control on any standard EVM chain.</p>
+          <div class="address-box">
+            <div>
+              <span>SATOSHI BLOCK 9 — EVM ADDRESS</span>
+              <code id="walletAddress">0xYOUR_SATOSHI_BLOCK9_ADDRESS</code>
+            </div>
+            <button onclick="copyAddress()">COPY</button>
+          </div>
+          <p class="note">Replace the placeholder above with the address you independently derive and verify before launch.</p>
+        </div>
+      </article>
+
+      <article class="doc-card" id="verify">
+        <div class="doc-num">3.3</div>
+        <div>
+          <h3>Don't trust. Verify.</h3>
+          <p>The point of the project is not “trust us.” The derivation can be reproduced with any known secp256k1 key pair. Take a solved Bitcoin puzzle key, derive its EVM address from the public key, then import the known private key into an EVM wallet. Both routes should resolve to the same address.</p>
+          <div class="verify-grid">
+            <div><span>01</span><p>Start with a known public key.</p></div>
+            <div><span>02</span><p>Derive the EVM address.</p></div>
+            <div><span>03</span><p>Import the matching private key.</p></div>
+            <div><span>04</span><p>Confirm the wallet address matches.</p></div>
+          </div>
+          <div class="callout"><b>Important:</b> deriving an address from a public key does not reveal or recover the private key. It only identifies the EVM account that the holder of that private key would control.</div>
+        </div>
+      </article>
+    </section>
+
+    <section id="mission">
+      <div class="section-kicker">04 / THE CHAIN, THE COIN & THE MISSION</div>
+      <h2>Turn an old key into a new legend.</h2>
+
+      <article class="doc-card" id="why-coin">
+        <div class="doc-num">4.1</div>
+        <div>
+          <h3>Why make a coin?</h3>
+          <p>Because the wallet has been hiding in plain sight. The public information existed. The derivation existed. Yet nobody turned that idea into a culture coin whose most symbolic holder is an address tied to one of Satoshi's earliest known keys.</p>
+          <p>$CEO turns that cryptographic curiosity into a public on-chain experiment: send a fixed share of supply to the derived Satoshi wallet and leave it there — untouched unless the original private-key holder ever returns.</p>
+        </div>
+      </article>
+
+      <article class="doc-card" id="why-chain">
+        <div class="doc-num">4.2</div>
+        <div>
+          <h3>Why Robinhood Chain?</h3>
+          <p>Because the thesis sits at the collision point of crypto and tokenized real-world assets. Robinhood's EVM direction makes the story legible: a crypto-native asset, an ancient Bitcoin key and tokenized equities living in the same environment.</p>
+          <p class="note">Keep this section aligned with the exact launch venue, tokenization features and chain availability at launch.</p>
+        </div>
+      </article>
+
+      <article class="doc-card" id="why-ceo">
+        <div class="doc-num">4.3</div>
+        <div>
+          <h3>Why $CEO?</h3>
+          <p>The meme is simple: Bitcoin created an entirely new monetary culture. Strategy turned that culture into a public-market balance-sheet machine. $CEO sends the story back to the person who started it.</p>
+          <div class="quote">“Make Satoshi the #1 $MSTR whale — then keep the chair warm.”</div>
+          <p>The token's narrative pairs itself with tokenized $MSTR exposure. Satoshi sits at the top of the token's holder table. If the platform's holder-sharing mechanics are enabled, the idea becomes a recursive meme: the wallet associated with one of Bitcoin's earliest keys accumulating symbolic exposure to the company most identified with corporate Bitcoin.</p>
+        </div>
+      </article>
+
+      <article class="doc-card" id="flywheel">
+        <div class="doc-num">4.4</div>
+        <div>
+          <h3>The forbidden flywheel</h3>
+          <div class="flywheel">
+            <div>BITCOIN</div><i>→</i><div>STRATEGY</div><i>→</i><div>$MSTR</div><i>→</i><div>$CEO</div><i>→</i><div>SATOSHI WALLET</div>
+          </div>
+          <p>Not a roadmap. Not a promise. A meme with a cryptographic anchor: build the largest possible symbolic $MSTR position around a wallet that only Satoshi's original private key could control, and let the internet write the rest of the story.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="final-cta">
+      <div class="section-kicker">THE END / OR THE BEGINNING</div>
+      <h2>The wallet is already there.</h2>
+      <p>The only question is whether its owner ever comes back.</p>
+      <div class="cta-row">
+        <a href="#" class="btn primary">BUY $CEO <span>↗</span></a>
+        <a href="#" class="btn ghost">VIEW CONTRACT <span>↗</span></a>
+        <a href="#" class="btn ghost">X / TWITTER <span>↗</span></a>
+      </div>
+      <div class="disclaimer">$CEO is a meme token and experimental on-chain project. Nothing on this site is financial advice or a promise of value, yield, equity ownership or future returns. References to Satoshi Nakamoto, Robinhood, Strategy, MSTR and Michael Saylor are cultural/narrative references only; the project is not affiliated with or endorsed by them.</div>
+    </section>
+
+    <footer>
+      <span>© 2026 SATOSHI WALLET / $CEO</span>
+      <span>DON'T TRUST. VERIFY.</span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
